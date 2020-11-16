@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import Result from './Result'
 import useValidation from '../validations/useValidation'
-
+import WordsCounter from '../pages/WordCount' 
 
 class NameForm extends Component {
     constructor(props) {
@@ -14,7 +14,9 @@ class NameForm extends Component {
             jobdescription: '',
             jobscore: 0,
             validJobdescription: { isValid: true, errorMsg: "" },
-            validResumedata: { isValid: true, errorMsg: "" }
+            validResumedata: { isValid: true, errorMsg: "" },
+            totalWords:{resumewords:0,jdwords:0
+            }
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,21 +24,34 @@ class NameForm extends Component {
     }
 
     handleChange(event) {
+        let eventData=event.target.value
         this.setState({ resumedata: event.target.value });
         const res = useValidation.isValidResumeData(event.target.value)
-        console.log('res resume', res)
+       
         this.setState({
             validResumedata: res
         })
-
+        console.log('Total words',this.state.totalWords)
+        this.setState({
+            totalWords:{resumewords:event.target.value.length, jdwords:this.state.totalWords.jdwords}
+        })
+        
     }
     handleChangejob(event) {
         this.setState({ jobdescription: event.target.value });
         const res = useValidation.isValidJobDescription(event.target.value)
         console.log('res - jd', res)
         this.setState({
-            validJobdescription: res
+            validJobdescription: res,
+           
         })
+
+        //Here we set the jdwords
+        this.setState({
+            totalWords:{resumewords:this.state.totalWords.resumewords, jdwords:event.target.value.length}
+        })
+
+        console.log(this.state.totalWords)
     }
     // TODO
     // showValidation(){
@@ -77,7 +92,10 @@ class NameForm extends Component {
 
             <div className="container">
                 <div className="row">
-                    <Result jobscore={this.state.jobscore} />
+                <div className="col"> <Result jobscore={this.state.jobscore} /></div>
+                {/* totalWords:{resumewords:0,jdwords:0 */}
+                <div className="col"><WordsCounter resumewords={this.state.totalWords.resumewords} jdwords={this.state.totalWords.jdwords}/></div>
+                   
                 </div>
                 <Form onSubmit={this.handleSubmit}>
                     <div className="row">
