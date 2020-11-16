@@ -1,3 +1,6 @@
+
+![alt text](https://github.com/MehtabAhmed176/smartcl-react-ui/blob/e13704cc8f06e039ee69300579f940f3a497470c/src%2Fcomponents%2Fassets%2Fimage%2Fscml.PNG?raw=true)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
